@@ -1,0 +1,27 @@
+{
+  "competitors": [
+    {
+      "name": "Notion",
+      "homepage": "https://www.notion.so",
+      "pricing": "https://www.notion.so/pricing"
+    },
+
+    {
+      "name": "ClickUp",
+      "homepage": "https://clickup.com",
+      "pricing": "https://clickup.com/pricing"
+    },
+
+    {
+      "name": "Airtable",
+      "homepage": "https://www.airtable.com",
+      "pricing": "https://www.airtable.com/pricing"
+    },
+
+    {
+      "name": "Asana",
+      "homepage": "https://asana.com",
+      "pricing": "https://asana.com/pricing"
+    }
+  ]
+}

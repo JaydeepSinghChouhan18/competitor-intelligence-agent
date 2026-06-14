@@ -1,8 +1,6 @@
 from langchain_groq import ChatGroq
-
 from config import GROQ_API_KEY, GROQ_MODEL
-from rag.retriever import retrieve_context
-
+from tools.scraper import fetch_website_text
 
 class IntelligenceAgent:
 
@@ -12,61 +10,32 @@ class IntelligenceAgent:
             api_key=GROQ_API_KEY
         )
 
-    def load_text_file(self, filepath):
-        with open(
-            filepath,
-            "r",
-            encoding="utf-8"
-        ) as f:
-            return f.read()
+    def analyze_changes(self, competitor_name, url):
 
-    def analyze_changes(
-        self,
-        competitor_name,
-        current_snapshot
-    ):
-
-        current_text = self.load_text_file(
-            current_snapshot
-        )
-
-        historical_context = retrieve_context(
-            f"{competitor_name} pricing features positioning"
-        )
+        current_text = fetch_website_text(url)
 
         prompt = f"""
-You are a professional competitor intelligence analyst.
+You are a competitor intelligence analyst.
 
-Competitor:
-{competitor_name}
+Competitor: {competitor_name}
 
-Historical Information:
-{historical_context}
-
-Current Website Snapshot:
+Website Content:
 {current_text}
 
 Analyze:
 
-1. Pricing Changes
-2. Feature Changes
-3. Product Positioning Changes
-4. Messaging Changes
-5. Marketing Strategy Changes
+1. Pricing strategy
+2. Features
+3. Positioning
+4. Messaging
+5. Marketing strategy
 
-Only mention meaningful changes.
-
-Provide:
-
-Executive Summary
-
-Major Changes
-
-Business Impact
-
-Recommended Actions
+Give:
+- Executive Summary
+- Key Changes
+- Business Impact
+- Recommendations
 """
 
         response = self.llm.invoke(prompt)
-
         return response.content
